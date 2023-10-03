@@ -1,0 +1,20 @@
+<div class="col-md-4" id="<%= dom_id article %>" data-controller="modal">
+  <div class="magazine_item">
+    <div class="magazine_item_content">
+      <!-- Extract the src attribute from the img tag -->
+      <% img_src = article[:display_image].match(/src=\"(.*?)\"/)&.captures&.first if article[:display_image].present? %>
+      
+      <!-- Display the image as a thumbnail if img_src is present -->
+      <% if img_src.present? %>
+        <%= image_tag(img_src, alt: "Article Image", class: "img-thumbnail") %>
+      <% end %>
+
+      <h2><%= article[:title] %></h2>
+      <p class="description"><%= article[:content].truncate(13) %></p>
+      <p class="published_date">Published on <%= article[:published_at].strftime('%B %d, %Y %I:%M %p') %></p>
+      <p class="full_article_link"><%= link_to "Read full article", article[:link], data: { turbo_frame: "modal", turbo_action: "replace" }, target: "
+      _blank"%></p>
+      <%# <a href="#" data-action="click->modal#openModal">Read full article</a> %>
+    </div>
+  </div>
+</div>

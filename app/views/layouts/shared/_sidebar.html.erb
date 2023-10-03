@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "sidebar" do %>
+  <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block navbar-light sidebar position-fixed" style="background-color: #1A1A1A;">
+    <div class="position-sticky">
+      <ul class="nav flex-column">
+        <% @subscriptions.each do |subscription| %>
+          <%# binding.pry %>
+          <li class="nav-item <%= 'active' if subscription.feed == @active_feed %>">
+            <!-- Update your link_to tag to include data attributes for Stimulus -->
+            <%= link_to subscription.feed.title, subscription.feed, remote: true, class: "show-feed-link left-nav-link", data: { turbo_frame: "main_content", turbo_action: "replace" } %>
+          </li>
+        <% end %>
+        <hr>
+        <%= link_to new_subscription_path(@subscription), remote: true, class: "new_subscription", data: { turbo_frame: "main_content", turbo_action: "replace"} do %>
+          <span class="bQYQRAUZPlXgEhTdyXiI"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon__B4xp9 color-accent__AnyWD icon ljI0g6jsFP9X8F24pLQf"><path fill="currentColor" fill-rule="evenodd" d="M2.25 13.045a.75.75 0 0 1 .75-.75A8.706 8.706 0 0 1 11.705 21a.75.75 0 0 1-1.5 0A7.205 7.205 0 0 0 3 13.795a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"></path><path fill="currentColor" fill-rule="evenodd" d="M2.25 6.857a.75.75 0 0 1 .75-.75A14.893 14.893 0 0 1 17.893 21a.75.75 0 0 1-1.5 0A13.393 13.393 0 0 0 3 7.607a.75.75 0 0 1-.75-.75ZM3.884 19.982a.134.134 0 1 0 0 .268.134.134 0 0 0 0-.268Zm-1.634.134a1.634 1.634 0 1 1 3.268 0 1.634 1.634 0 0 1-3.268 0ZM18.857 2.679a.75.75 0 0 1 .75.75V8.57a.75.75 0 0 1-1.5 0V3.43a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"></path><path fill="currentColor" fill-rule="evenodd" d="M15.536 6a.75.75 0 0 1 .75-.75h5.143a.75.75 0 0 1 0 1.5h-5.143a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"></path></svg></span>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+<% end %>

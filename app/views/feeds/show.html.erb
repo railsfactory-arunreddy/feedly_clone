@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "main_content" do %>
+  <%= turbo_stream.replace "sidebar" do %>
+    <%= render "layouts/shared/sidebar", locals: {subscriptions: @subscriptions, active_feed: @active_feed} %>
+  <% end %>
+  <%= turbo_frame_tag "#{dom_id @feed}" do %>
+    <ul class="feed_articles_list magazine">
+      <div class="row">
+        <%= render @feed.articles %>
+      </div>
+    </ul>
+  <% end %>
+<% end %>

@@ -1,0 +1,35 @@
+ <!-- app/views/subscriptions/new.html.erb -->
+<h1>Subscribe to a New Feed</h1>
+
+<%= turbo_frame_tag "main_content" do %>
+  <%= form_with(model: @feed, url: subscriptions_path) do |form| %>
+    <% if @feed.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@feed.errors.count, 'error') %> prohibited this feed from being subscribed:</h2>
+        <ul>
+          <% @feed.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.text_field :title, class: 'form-control', placeholder: "Title" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.text_field :description, class: 'form-control', placeholder: "Description" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.text_field :url, class: 'form-control', placeholder: "Link to RSS feed" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit 'Subscribe', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= link_to 'Back to Subscribed Feeds', subscriptions_path %>

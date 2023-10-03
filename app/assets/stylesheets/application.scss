@@ -1,0 +1,122 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap";
+
+body, html {
+  height: 100%;
+  background-color: black;
+}
+
+#sidebar {
+  height: 100%;
+  // background-color: #333; /* Customize the background color */
+  // color: #fff; /* Customize the text color */
+}
+
+.left-nav-link {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-item.active {
+  background-color: #007bff;
+}
+
+.nav-item.active:hover {
+  background-color: #0056b3;
+}
+
+.feed_articles_list {
+  color: white;
+  list-style: none;
+}
+
+.form-group {
+  padding: 3px;
+}
+
+// Magazine view
+.magazine {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0;
+}
+
+.magazine_item {
+  flex: 1;
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.magazine_item:hover {
+  transform: translateY(-5px);
+  color: green;
+}
+
+.magazine_item_content {
+  text-align: left;
+}
+
+.magazine_item h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.magazine_item .description {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.magazine_item .published_date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.magazine_item .full_article_link {
+  margin-top: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .magazine {
+    flex-direction: column;
+  }
+
+  .magazine_item {
+    margin-bottom: 20px;
+  }
+}
+
+// Modal css
+
+.modal {
+  display: none; /* Initially hidden */
+  /* Add other styles for modal position, background, etc. */
+}
+
+.visible {
+  display: block; /* Display when visible class is added */
+}
+
+/* Style the modal content */
+// .modal-content {
+//   /* Add styles for modal content */
+// }
