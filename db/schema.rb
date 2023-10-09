@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_29_113658) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_102935) do
   create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "feed_id", null: false
     t.string "title"
@@ -40,6 +40,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_113658) do
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
+  create_table "user_article_interactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "article_id"
+    t.string "interaction_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_user_article_interactions_on_article_id"
+    t.index ["user_id"], name: "index_user_article_interactions_on_user_id"
+  end
+
   create_table "user_feed_actions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "feed_id"
@@ -66,6 +76,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_29_113658) do
   add_foreign_key "articles", "feeds"
   add_foreign_key "subscriptions", "feeds"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "user_article_interactions", "articles"
+  add_foreign_key "user_article_interactions", "users"
   add_foreign_key "user_feed_actions", "feeds"
   add_foreign_key "user_feed_actions", "users"
 end

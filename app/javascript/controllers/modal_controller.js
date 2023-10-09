@@ -1,13 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
+import * as bootstrap from "bootstrap"
 
 export default class extends Controller {
-  static targets = ["modal", "content"];
-
-  openModal() {
-    this.modalTarget.classList.add("open");
+  connect() {
+    console.log("here")
+    this.modal = new bootstrap.Modal(this.element)
   }
 
-  closeModal() {
-    this.modalTarget.classList.remove("open");
+  openModal() {
+    console.log("open")
+    if (!this.modal.isOpened) {
+      this.modal.show()
+    }
+  }
+
+  closeModal(event) {
+    console.log("close")
+    this.modal.hide()
   }
 }

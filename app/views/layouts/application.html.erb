@@ -7,10 +7,23 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <%= javascript_importmap_tags %>
   </head>
   <body>
     <div class="container-fluid" style="margin-top: 0;">
+      <div
+        class="modal"
+        tabindex="-1"
+        data-controller="modal"
+        data-action="turbo:frame-load->modal#openModal turbo:submit-end->modal#closeModal"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <%= turbo_frame_tag "modal" %>
+          </div>
+        </div>
+      </div>
       <%= turbo_frame_tag "container" do %>
         <div class="row">
           <%= turbo_frame_tag "sidebar" do %>
@@ -22,48 +35,9 @@
               <%= turbo_frame_tag "main_content" do %>
                 <%= yield %>
               <% end %>
-              <%#= turbo_frame_tag "feed-details", target: "_top", data: { turbo_action: "replace" } %>
           </main>
-        </div>
-        <div
-          class="modal"
-          tabindex="-1"
-          data-controller="modal"
-          data-action="turbo:frame-load->modal#open turbo:submit-end->modal#close"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <%= turbo_frame_tag "modal" %>
-            </div>
-          </div>
         </div>
       <% end %>
     </div>
-    <%#= yield %>
   </body>
-
-  <%# <script>
-  document.addEventListener("turbo:load", function() {
-    // Find all links with class "left-nav-link"
-    const links = document.querySelectorAll(".nav-item");
-
-    // Add a click event listener to each link
-    links.forEach((link) => {
-      link.addEventListener("click", function(event) {
-        // Remove "active" class from all links
-        links.forEach((l) => l.classList.remove("active"));
-
-        // Add "active" class to the clicked link
-        link.classList.add("active");
-      });
-    });
-  });
-</script>
-
-  <style>
-    .nav-item.active {
-      background-color: #007bff;
-      /* Add other styles to indicate it's active */
-    }
-  </style> %>
 </html>

@@ -34,16 +34,16 @@ class FeedsParserService
         image: img_tag
       }
 
-      #binding.pry
-
-      article = Article.create!(
-        feed: @feed,
-        title: title,
-        content: html_content_without_img,
-        link: link,
-        published_at: pub_date,
-        display_image: img_tag
-      )
+      if pub_date <= 10.minutes.ago
+        article = Article.create!(
+          feed: @feed,
+          title: title,
+          content: html_content_without_img,
+          link: link,
+          published_at: pub_date,
+          display_image: img_tag
+        )
+      end
 
       feed_items << feed_item
     end

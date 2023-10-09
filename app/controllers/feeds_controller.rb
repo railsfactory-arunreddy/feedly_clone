@@ -10,11 +10,8 @@ class FeedsController < ApplicationController
 
   def show
     @active_feed = @feed
-    #feed_parser = FeedsParserService.new(@feed)
-    #binding.pry
     @user = current_user
     @subscriptions = @user.subscriptions
-    #@feed_items = feed_parser.parse_feed
 
     respond_to do |format|
       format.html

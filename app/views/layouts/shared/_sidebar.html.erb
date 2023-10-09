@@ -1,6 +1,7 @@
 <%= turbo_frame_tag "sidebar" do %>
   <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block navbar-light sidebar position-fixed" style="background-color: #1A1A1A;">
     <div class="position-sticky">
+      <h5 style="font-weight: 600; color: white;">FEEDS</h5>
       <ul class="nav flex-column">
         <% @subscriptions.each do |subscription| %>
           <%# binding.pry %>

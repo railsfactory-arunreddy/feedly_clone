@@ -28,11 +28,10 @@ class SubscriptionsController < ApplicationController
   def create
     @feed = Feed.find_or_initialize_by(feed_params)
 
-  
     if @feed.save
       feed_parser = FeedsParserService.new(@feed).parse_feed
       current_user.subscribed_feeds << @feed
-      #binding.pry
+      binding.pry
       render turbo_stream: turbo_stream.replace("main_content", template: "feeds/show")
     else
       render turbo_stream: turbo_stream.replace("main_content", template: "subscriptions/new")
