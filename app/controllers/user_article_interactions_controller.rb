@@ -1,12 +1,36 @@
-def mark_as_read
-  article = Article.find(params[:article_id])
-  interaction_type = 'Read' # Use the appropriate interaction type
+class UserArticleInteractionsController < ApplicationController
+  def mark_as_read
+    article = Article.find(params[:article_id])
+    interaction_type = 'read'
+    #binding.pry
 
-  # Create or update a UserArticleInteraction record
-  current_user.user_article_interactions.find_or_create_by(article: article) do |interaction|
-    interaction.interaction_type = interaction_type
+    user_article_interaction = UserArticleInteraction.find_by(user: current_user, article: article, interaction_type: interaction_type)
+
+    if user_article_interaction
+      user_article_interaction.delete
+      render json: { status: 'success', type: 'unread' }
+    else
+      current_user.user_article_interactions.create!(article: article) do |interaction|
+        interaction.interaction_type = interaction_type
+      end
+      render json: { status: 'success', type: 'read' }
+    end
   end
 
-  # You can respond with JSON or a success message as needed
-  render json: { status: 'success' }
+  def mark_as_read_later
+    article = Article.find(params[:article_id])
+    interaction_type = 'read_later'
+
+    user_article_interaction = UserArticleInteraction.find_by(user: current_user, article: article, interaction_type: interaction_type)
+
+    if user_article_interaction
+      user_article_interaction.delete
+      render json: { status: 'success', type: 'no_read_later' }
+    else
+      current_user.user_article_interactions.create!(article: article) do |interaction|
+        interaction.interaction_type = interaction_type
+      end
+      render json: { status: 'success', type: 'read_later' }
+    end
+  end
 end

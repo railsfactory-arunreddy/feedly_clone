@@ -1,5 +1,64 @@
 <%= turbo_frame_tag :modal, target: :_top do %>
-  <button data-action="click->modal#closeModal"><span class="bQYQRAUZPlXgEhTdyXiI"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="icon__B4xp9 icon importance-tertiary__ib-ca ljI0g6jsFP9X8F24pLQf"><g fill="currentColor" fill-rule="nonzero"><path d="M3.932 3.932a.5.5 0 0 1 .638-.058l.07.058 11.428 11.429a.5.5 0 0 1-.638.765l-.07-.058L3.933 4.639a.5.5 0 0 1 0-.707Z"></path><path d="M15.36 3.932a.5.5 0 0 1 .766.638l-.058.07L4.639 16.067a.5.5 0 0 1-.765-.638l.058-.07L15.361 3.933Z"></path></g></svg></span></button>
+  <button data-action="click->modal#closeModal" class="article_action close"><span class="bQYQRAUZPlXgEhTdyXiI"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="icon__B4xp9 icon importance-tertiary__ib-ca ljI0g6jsFP9X8F24pLQf"><g fill="currentColor" fill-rule="nonzero"><path d="M3.932 3.932a.5.5 0 0 1 .638-.058l.07.058 11.428 11.429a.5.5 0 0 1-.638.765l-.07-.058L3.933 4.639a.5.5 0 0 1 0-.707Z"></path><path d="M15.36 3.932a.5.5 0 0 1 .766.638l-.058.07L4.639 16.067a.5.5 0 0 1-.765-.638l.058-.07L15.361 3.933Z"></path></g></svg></span></button>
+
+  <div class="article_actions-left">
+    <div data-controller="read-article" data-read-article-article-id="<%= @article.id %>">
+      <button type="button" aria-label="Read Later" class="article_action bookmark" data-action="click->read-article#markAsReadLater">
+        <span class="bQYQRAUZPlXgEhTdyXiI">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon__B4xp9 icon bookmark">
+            <% if current_user.user_article_interactions.read_later.exists?(article: @article) %>
+              <path fill="currentColor" fill-rule="nonzero" d="M15.692 3H8.308C7.033 3 6 4.06 6 5.368v15.158l.006.08a.46.46 0 0 0 .668.34l5.332-2.84 5.32 2.84a.462.462 0 0 0 .674-.42V5.368C18 4.06 16.967 3 15.692 3Z"></path>
+            <% else %>
+              <path fill="currentColor" fill-rule="nonzero" d="M16 2.929H8a2.5 2.5 0 0 0-2.5 2.5v16l.007.084a.5.5 0 0 0 .723.36l5.777-2.998 5.762 2.997a.5.5 0 0 0 .731-.443v-16a2.5 2.5 0 0 0-2.5-2.5Zm0 1 .144.006A1.5 1.5 0 0 1 17.5 5.43v15.176l-5.261-2.737-.09-.036a.5.5 0 0 0-.371.036L6.5 20.606V5.429a1.5 1.5 0 0 1 1.5-1.5h8Z"></path>
+            <% end %>
+          </svg>
+        </span>
+      </button>
+
+      <button type="button" aria-label="Read" class="article_action read" data-action="click->read-article#markAsRead">
+        <span class="bQYQRAUZPlXgEhTdyXiI">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 16 16" class="icon__B4xp9 icon read">
+            <% if current_user.user_article_interactions.read.exists?(article: @article) %>
+              <path fill="currentColor" fill-rule="nonzero" d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"/>
+            <% else %>
+              <path fill="currentColor" fill-rule="nonzero" d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+            <% end %>
+          </svg>
+        </span>
+      </button>
+    
+      <button type="button" aria-label="Save to Board" class="article_action mark_as_read" data-action="click->read-article#openDropdown">
+        <span class="bQYQRAUZPlXgEhTdyXiI">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon__B4xp9 icon importance-secondary__YiGWy ljI0g6jsFP9X8F24pLQf">
+            <g fill="currentColor" fill-rule="nonzero">
+              <path d="M11.48 2.78a.5.5 0 0 1 .85-.08l.047.08 2.797 5.687 6.256.918a.5.5 0 0 1 .333.788l-.056.065-2.47 2.413a.5.5 0 0 1-.757-.646l.059-.069 1.746-1.709-5.516-.808a.5.5 0 0 1-.324-.191l-.052-.083-2.465-5.012-2.464 5.012a.5.5 0 0 1-.282.25l-.094.024-5.517.808 3.993 3.904a.5.5 0 0 1 .15.345l-.007.097-.942 5.511 4.93-2.602a.5.5 0 0 1 .627.133l.049.076a.5.5 0 0 1-.133.626l-.076.05-5.827 3.075a.5.5 0 0 1-.734-.446l.008-.08 1.068-6.253-4.527-4.425a.5.5 0 0 1 .194-.833l.083-.02 6.255-.918 2.798-5.688Z"></path><path d="M17 13.5a.5.5 0 0 1 .492.41l.008.09v6a.5.5 0 0 1-.992.09L16.5 20v-6a.5.5 0 0 1 .5-.5Z"></path><path d="M20 16.5a.5.5 0 0 1 .09.992L20 17.5h-6a.5.5 0 0 1-.09-.992L14 16.5h6Z"></path>
+            </g>
+          </svg>
+          <div class="dropdown">
+            <div class="dropdown-menu" data-target="read-article.menu">
+              <% @boards.each do |board| %>
+                <%= link_to board.title, "#", data: { action: "click->read-article#selectBoard", board_id: board.id, article_id: @article.id }, class: "dropdown-item" %><br>
+              <% end %>
+            </div>
+          </div>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div data-controller="read-article" style="float: right;">
+    <p>Share : </p>
+    <button id="facebook-share-button" data-action="click->read-article#shareFacebook" data-article-id-target="<%= @article.id %>">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon__B4xp9 icon importance-secondary__YiGWy"><g fill="currentColor" fill-rule="nonzero"><path d="M18.571 2.929H5.43a2.5 2.5 0 0 0-2.5 2.5V18.57a2.5 2.5 0 0 0 2.5 2.5H18.57a2.5 2.5 0 0 0 2.5-2.5V5.43a2.5 2.5 0 0 0-2.5-2.5Zm-13.142 1H18.57a1.5 1.5 0 0 1 1.5 1.5V18.57a1.5 1.5 0 0 1-1.5 1.5H5.43a1.5 1.5 0 0 1-1.5-1.5V5.43a1.5 1.5 0 0 1 1.5-1.5Z"></path><path d="M17.15 7.214a.5.5 0 0 1 .09.992l-.09.008h-1.711c-1.385 0-2.027.582-2.079 1.895l-.003.175v10.287a.5.5 0 0 1-.992.09l-.008-.09V10.284c0-1.919 1.009-2.991 2.871-3.066l.21-.004h1.711Z"></path><path d="M16.286 12.357a.5.5 0 0 1 .09.992l-.09.008H9.429a.5.5 0 0 1-.09-.992l.09-.008h6.857Z"></path></g></svg>
+    </button>
+
+    <button>
+      <a href="https://twitter.com/intent/tweet?text=<%= @article.id %>" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon__B4xp9 icon importance-secondary__YiGWy"><path fill="currentColor" fill-rule="nonzero" d="M14.09 5.002a4.34 4.34 0 0 0-2.59 4.03v.349l-.109-.003a8.637 8.637 0 0 1-6.696-3.665.5.5 0 0 0-.866.084l-.09.223-.041.109c-.094.255-.187.545-.274.865-.495 1.818-.581 3.73.007 5.537l.092.267c.647 1.766 1.921 3.242 3.905 4.336l.105.056-.158.088a9.477 9.477 0 0 1-4.784 1.08c-.526-.021-.723.68-.262.936 8.374 4.653 17.885-.41 17.885-10.294l-.009-.27a3.62 3.62 0 0 0-.028-.273l-.18.188a7.117 7.117 0 0 0 1.917-3.384.5.5 0 0 0-.774-.527l-.295.2c-.598.386-1.24.7-1.913.932l-.05.016-.081-.08a4.34 4.34 0 0 0-4.509-.882l-.201.082Zm4.27 1.78a.5.5 0 0 0 .521.151l.378-.122c.374-.13.74-.281 1.096-.454l.123-.065-.024.054a6.117 6.117 0 0 1-1.16 1.587.5.5 0 0 0-.14.45c.04.204.06.41.06.619l-.003.285c-.164 8.149-7.352 12.587-14.43 10.03l-.21-.077.197-.03a10.477 10.477 0 0 0 4.084-1.653.5.5 0 0 0-.078-.871c-2.38-1.058-3.78-2.584-4.392-4.465-.52-1.594-.441-3.318.007-4.965l.063-.227.2.225a9.638 9.638 0 0 0 7.361 3.129.5.5 0 0 0 .487-.5v-.857a3.34 3.34 0 0 1 5.86-2.243Z"></path></svg>
+      </a>
+    </button>
+  </div>
+
   <div class="modal-body">
     <div>
       <% img_src = @article[:display_image].match(/src=\"(.*?)\"/)&.captures&.first if @article[:display_image].present? %>
@@ -17,8 +76,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="article" data-controller="read-article" data-read-article-article-id="<%= @article.id %>">
-    <button data-action="click->read-article#markAsRead">Mark as Read</button>
   </div>
 <% end %>

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_05_102935) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_12_071542) do
+  create_table "article_boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "board_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_boards_on_article_id"
+    t.index ["board_id"], name: "index_article_boards_on_board_id"
+  end
+
   create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "feed_id", null: false
     t.string "title"
@@ -21,6 +30,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_102935) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["feed_id"], name: "index_articles_on_feed_id"
+  end
+
+  create_table "boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.index ["user_id"], name: "index_boards_on_user_id"
   end
 
   create_table "feeds", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -43,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_102935) do
   create_table "user_article_interactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "article_id"
-    t.string "interaction_type"
+    t.integer "interaction_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_user_article_interactions_on_article_id"
@@ -73,7 +91,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_102935) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "article_boards", "articles"
+  add_foreign_key "article_boards", "boards"
   add_foreign_key "articles", "feeds"
+  add_foreign_key "boards", "users"
   add_foreign_key "subscriptions", "feeds"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "user_article_interactions", "articles"
